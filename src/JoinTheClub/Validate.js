@@ -27,11 +27,7 @@ const validate = (values) => {
     errors.email = "Invalid email address";
   }
 
-  if (!values.phone) {
-    errors.phone = "Required";
-  } else if (
-    !/^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/i.test(values.phone)
-  ) {
+  if (!/^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/i.test(values.phone)) {
     errors.phone = "Please use the (123) 222-3333 number format";
   }
 

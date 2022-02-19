@@ -22,7 +22,7 @@ const PrimaryMember = (props) => {
       <Segment padded basic style={{ width: "100%" }}>
         <Form.Input
           type="text"
-          label="First Name"
+          label="First Name*"
           id="firstName"
           value={primary.values.firstName}
           onChange={primary.handleChange}
@@ -35,7 +35,7 @@ const PrimaryMember = (props) => {
         />
         <Form.Input
           type="text"
-          label="Last Name"
+          label="Last Name*"
           id="lastName"
           value={primary.values.lastName}
           onChange={primary.handleChange}
@@ -49,7 +49,7 @@ const PrimaryMember = (props) => {
 
         <Form.Input
           type="email"
-          label="Email Address"
+          label="Email Address*"
           id="email"
           placeholder="info@okcastroclub.com"
           value={primary.values.email}
@@ -63,7 +63,7 @@ const PrimaryMember = (props) => {
         />
         <Form.Input
           type="text"
-          label="Phone Number"
+          label="Phone Number (ex. (405) 123-4567)"
           id="phone"
           placeholder="(405) 123-4567)"
           minLength="7"
