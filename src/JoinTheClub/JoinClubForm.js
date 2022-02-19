@@ -82,6 +82,7 @@ const JoinClubForm = () => {
 
     post("club-members", submission)
       .then((data) => setData(data))
+      .then(() => alert("Success!", data, "loading:", loading))
       .catch((error) => console.log(error));
   };
 
@@ -94,7 +95,6 @@ const JoinClubForm = () => {
         <Form
           style={{
             marginBottom: "2rem",
-
             marginTop: "2rem",
           }}
           onSubmit={handleFormSubmit}
