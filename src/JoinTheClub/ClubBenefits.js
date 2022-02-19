@@ -6,7 +6,7 @@ const ClubBenefits = (props) => {
     <>
       <Header size="huge" icon textAlign="center">
         <Icon name="rocket" circular color="blue" />
-        Why Should I Join?
+        Member Benefits
       </Header>
       <Segment padded basic>
         <Header sub textAlign="center">

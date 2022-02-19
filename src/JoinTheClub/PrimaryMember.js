@@ -7,6 +7,7 @@ import {
   Header,
   Divider,
   Segment,
+  Message,
 } from "semantic-ui-react";
 
 const PrimaryMember = (props) => {
@@ -61,9 +62,14 @@ const PrimaryMember = (props) => {
               : null
           }
         />
+        {props.emailData === true ? (
+          <Message negative>That email address is already registered.</Message>
+        ) : (
+          ""
+        )}
         <Form.Input
           type="text"
-          label="Phone Number (ex. (405) 123-4567)"
+          label="Phone Number* (ex. (405) 123-4567)"
           id="phone"
           placeholder="(405) 123-4567)"
           minLength="7"
@@ -147,6 +153,7 @@ const PrimaryMember = (props) => {
         icon
         labelPosition="right"
         primary
+        loading={props.loading === true ? true : false}
         disabled={!primary.isValid || !primary.touched.firstName}
         onClick={props.onHandleStepTwo}
         style={{ marginBottom: "1rem" }}

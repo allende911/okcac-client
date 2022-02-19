@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form, Label, Segment } from "semantic-ui-react";
+import { Container, Form, Label, Message, Segment } from "semantic-ui-react";
 import { useFormik } from "formik";
 import useFetch from "../utils/useFetch";
 import validate from "./Validate";
@@ -8,15 +8,19 @@ import PrimaryMember from "./PrimaryMember";
 import FamilyMembers from "./FamilyMembers";
 import JoinClubSteps from "./JoinClubSteps";
 import Checkout from "./Checkout";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 const JoinClubForm = () => {
   const [data, setData] = useState({});
+  const [emailData, setEmailData] = useState(false);
+  const { get, post, loading } = useFetch(
+    "https://okcac-strapi.herokuapp.com/api/"
+  );
   const [steps, setSteps] = useState(1);
   const [family, setFamily] = useState([]);
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const current = new Date();
-  const { post, loading } = useFetch("https://okcac-strapi.herokuapp.com/api/");
   const primary = useFormik({
     initialValues: {
       firstName: "",
@@ -61,9 +65,16 @@ const JoinClubForm = () => {
   };
 
   const handleStepTwo = (event) => {
-    if (primary.isValid) {
-      setSteps(3);
-    }
+    get(
+      `club-members?filters[email][$eq]=${primary.values.email}&[fields]=email`
+    ).then((data) => {
+      if (data.data.length === 0 && primary.isValid) {
+        setSteps(3);
+        setEmailData(false);
+      } else {
+        setEmailData(true);
+      }
+    });
   };
 
   const handleStepThree = (event) => setSteps(4);
@@ -109,6 +120,8 @@ const JoinClubForm = () => {
               setOpen={setModalOpen}
               setChecked={setChecked}
               checked={checked}
+              emailData={emailData}
+              loading={loading}
             />
           )}
           {steps === 3 && (
