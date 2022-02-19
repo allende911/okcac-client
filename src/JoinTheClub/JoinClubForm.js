@@ -16,7 +16,7 @@ const JoinClubForm = () => {
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const current = new Date();
-  const { post, loading } = useFetch("http://localhost:1337/api/");
+  const { post, loading } = useFetch("https://parsecs.io/api/");
   const primary = useFormik({
     initialValues: {
       firstName: "",
