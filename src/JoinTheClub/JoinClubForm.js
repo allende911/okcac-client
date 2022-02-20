@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form, Label, Message, Segment } from "semantic-ui-react";
+import { Container, Form, Label, Segment } from "semantic-ui-react";
 import { useFormik } from "formik";
 import useFetch from "../utils/useFetch";
 import validate from "./Validate";
@@ -8,7 +8,6 @@ import PrimaryMember from "./PrimaryMember";
 import FamilyMembers from "./FamilyMembers";
 import JoinClubSteps from "./JoinClubSteps";
 import Checkout from "./Checkout";
-import { wait } from "@testing-library/user-event/dist/utils";
 
 const JoinClubForm = () => {
   const [data, setData] = useState({});
