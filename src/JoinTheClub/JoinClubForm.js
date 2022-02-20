@@ -8,6 +8,7 @@ import PrimaryMember from "./PrimaryMember";
 import FamilyMembers from "./FamilyMembers";
 import JoinClubSteps from "./JoinClubSteps";
 import Checkout from "./Checkout";
+import RenewalPrice from "./RenewalPrice";
 
 const JoinClubForm = () => {
   const [data, setData] = useState({});
@@ -100,7 +101,7 @@ const JoinClubForm = () => {
     <Container text textAlign="left">
       <Segment style={{ backgroundColor: "#F5F5F5" }} raised>
         <Label color="blue" ribbon="right">
-          Currently: $6
+          Currently: $<RenewalPrice />
         </Label>
         <Form
           style={{

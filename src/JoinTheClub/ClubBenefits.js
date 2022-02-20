@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Divider, Header, Icon, Segment } from "semantic-ui-react";
+import RenewalPrice from "./RenewalPrice";
 
 const ClubBenefits = (props) => {
   return (
@@ -11,7 +12,7 @@ const ClubBenefits = (props) => {
       <Segment padded basic>
         <Header sub textAlign="center">
           A membership to the OKCAC is $36 per year. Your first year is
-          pro-rated and is currently $6. Dues renew on April 1.
+          pro-rated and is currently $<RenewalPrice />. Dues renew on April 1.
         </Header>
         <Divider />
 

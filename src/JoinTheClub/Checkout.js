@@ -4,6 +4,7 @@ import {
   Divider,
   Header,
   Icon,
+  Loader,
   Segment,
   Table,
 } from "semantic-ui-react";
@@ -54,7 +55,7 @@ const Checkout = (props) => {
           </Table>
         </>
       )}
-      <RenewalPrice />
+      Membership Price: ${<Loader /> && <RenewalPrice />}
       <Segment basic textAlign="center">
         <Button
           primary

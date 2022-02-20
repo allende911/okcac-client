@@ -153,7 +153,6 @@ const PrimaryMember = (props) => {
         icon
         labelPosition="right"
         primary
-        loading={props.loading === true ? true : false}
         disabled={!primary.isValid || !primary.touched.firstName}
         onClick={props.onHandleStepTwo}
         style={{ marginBottom: "1rem" }}
