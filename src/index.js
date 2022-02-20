@@ -15,9 +15,7 @@ ReactDOM.render(
         <Route path="/" element={<App />} />
         <Route path="/club-signup" element={<JoinClubForm />} />
         <Route path="/club-signup/success" element={<Success />} />
-        <Route>
-          <App />
-        </Route>
+        <Route element={<App />} />
       </Routes>
     </SiteLayout>
   </BrowserRouter>,
