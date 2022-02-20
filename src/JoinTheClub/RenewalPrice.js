@@ -4,7 +4,7 @@ import useFetch from "../utils/useFetch";
 
 const RenewalPrice = () => {
   const [price, setPrice] = useState(0);
-  const { get, loading } = useFetch("http://localhost:1337/api/");
+  const { get } = useFetch("http://localhost:1337/api/");
 
   useEffect(() => {
     get("site-setting?[fields]=membershipPrice")
