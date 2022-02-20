@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Label, Segment } from "semantic-ui-react";
 import { useFormik } from "formik";
+import { loadStripe } from "@stripe/stripe-js";
 import useFetch from "../utils/useFetch";
 import validate from "./Validate";
 import ClubBenefits from "./ClubBenefits";
@@ -9,6 +10,11 @@ import FamilyMembers from "./FamilyMembers";
 import JoinClubSteps from "./JoinClubSteps";
 import Checkout from "./Checkout";
 import RenewalPrice from "./RenewalPrice";
+import Success from "./Success";
+
+const stripePromise = loadStripe(
+  "pk_test_51KTx32Ff9B6igBMjGFFnQpoISxB0W19RSwvkgPBmJvAUnJYdbuSCOpLNDElE8YBTITTWkUsv3IBNv19xnK5krXoj00xIpghiQV"
+);
 
 const JoinClubForm = () => {
   const [data, setData] = useState({});
@@ -91,10 +97,28 @@ const JoinClubForm = () => {
       data: combined,
     };
 
-    post("club-members", submission)
-      .then((data) => setData(data))
-      .then(() => alert("Success!", data, "loading:", loading))
-      .catch((error) => console.log(error));
+    post("club-members", submission).then((pay) =>
+      stripePromise.then((stripe) => {
+        stripe
+          .redirectToCheckout({
+            lineItems: [
+              {
+                price: "price_1KVNZIFf9B6igBMjIl6bCRgN",
+                quantity: 1,
+              },
+            ],
+            mode: "payment",
+            successUrl: "https://parsecs.io/club-signup/success",
+            cancelUrl: "http://parsecs.io/club-signup/payment-error",
+          })
+          .then((response) => {
+            console.log(response.error);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+    );
   };
 
   return (
@@ -145,7 +169,7 @@ const JoinClubForm = () => {
         </Form>
         <JoinClubSteps steps={steps} />
       </Segment>
-      )
+      {data.length > 0 ? <Success data={data} /> : ""}
     </Container>
   );
 };

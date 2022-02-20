@@ -1,14 +1,11 @@
 import React from "react";
 import { Container, Divider, Icon, Header, Segment } from "semantic-ui-react";
 
-const Success = () => {
+const Success = (props) => {
   return (
-    <Container text>
-      <Segment
-        style={{ backgroundColor: "#ffffff", marginTop: "2rem" }}
-        textAlign="center"
-      >
-        <Header size="huge" icon>
+    <Container text textAlign="left">
+      <Segment style={{ backgroundColor: "#F5F5F5" }} raised>
+        <Header size="huge" icon textAlign="center">
           <Icon name="rocket" circular color="blue" />
           Thank you for joining!
         </Header>
