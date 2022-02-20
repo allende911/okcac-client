@@ -4,7 +4,7 @@ import useFetch from "../utils/useFetch";
 
 const RenewalPrice = () => {
   const [price, setPrice] = useState(0);
-  const { get } = useFetch("https://okcac-strapi.herokuapp.com/");
+  const { get } = useFetch("https://okcac-strapi.herokuapp.com/api/");
 
   useEffect(() => {
     get("site-setting?[fields]=membershipPrice")
