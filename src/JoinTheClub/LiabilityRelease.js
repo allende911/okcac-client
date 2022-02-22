@@ -5,7 +5,9 @@ import { Field, FormikProvider } from "formik";
 import ReactMarkdown from "react-markdown";
 
 const LiabilityRelease = (props) => {
-  const { get, loading } = useFetch("http://localhost:1337/api/site-setting");
+  const { get, loading } = useFetch(
+    "https://okcac-strapi.herokuapp.com/api/site-setting"
+  );
   const [release, setRelease] = useState();
   const primary = props.primary;
 
