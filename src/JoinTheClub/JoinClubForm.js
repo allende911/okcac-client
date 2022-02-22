@@ -20,7 +20,7 @@ const JoinClubForm = () => {
   const [data, setData] = useState({});
   const [content, setContent] = useState();
   const [emailData, setEmailData] = useState(false);
-  const { get, post, loading } = useFetch("http://parsecs.io/api/");
+  const { get, post, loading } = useFetch("https://parsecs.io/api/");
   const [steps, setSteps] = useState(1);
   const [family, setFamily] = useState([]);
   const [checked, setChecked] = useState(false);
@@ -116,8 +116,8 @@ const JoinClubForm = () => {
               },
             ],
             mode: "payment",
-            successUrl: "http://parsecs.io/club-signup/success",
-            cancelUrl: "http://parsecs.io/club-signup/payment-error",
+            successUrl: "https://parsecs.io/club-signup/success",
+            cancelUrl: "https://parsecs.io/club-signup/payment-error",
           })
           .then((response) => {
             console.log(response.error);

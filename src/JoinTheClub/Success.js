@@ -12,7 +12,7 @@ import ReactMarkdown from "react-markdown";
 
 const Success = (props) => {
   const [success, setSuccess] = useState();
-  const { get, loading } = useFetch("http://parsecs.io/api/");
+  const { get } = useFetch("https://parsecs.io/api/");
 
   useEffect(() => {
     get("signup-form?populate[additionalPage]=*").then((data) =>
