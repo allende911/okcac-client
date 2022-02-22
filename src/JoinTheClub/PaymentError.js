@@ -12,7 +12,7 @@ import ReactMarkdown from "react-markdown";
 
 const Success = (props) => {
   const [cancelled, setCancelled] = useState();
-  const { get } = useFetch("https://parsecs.io/api/");
+  const { get } = useFetch("https://okcac-strapi.herokuapp.com/api/");
 
   useEffect(() => {
     get("signup-form?populate[additionalPage]=*").then((data) =>

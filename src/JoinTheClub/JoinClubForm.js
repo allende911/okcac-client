@@ -20,7 +20,9 @@ const JoinClubForm = () => {
   const [data, setData] = useState({});
   const [content, setContent] = useState();
   const [emailData, setEmailData] = useState(false);
-  const { get, post, loading } = useFetch("https://parsecs.io/api/");
+  const { get, post, loading } = useFetch(
+    "https://okcac-strapi.herokuapp.com/api/"
+  );
   const [steps, setSteps] = useState(1);
   const [family, setFamily] = useState([]);
   const [checked, setChecked] = useState(false);
