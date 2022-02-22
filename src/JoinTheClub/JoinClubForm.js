@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Container, Form, Label, Segment } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Container, Form, Label, Loader, Segment } from "semantic-ui-react";
 import { useFormik } from "formik";
 import { loadStripe } from "@stripe/stripe-js";
 import useFetch from "../utils/useFetch";
@@ -18,10 +18,9 @@ const stripePromise = loadStripe(
 
 const JoinClubForm = () => {
   const [data, setData] = useState({});
+  const [content, setContent] = useState();
   const [emailData, setEmailData] = useState(false);
-  const { get, post, loading } = useFetch(
-    "https://okcac-strapi.herokuapp.com/api/"
-  );
+  const { get, post, loading } = useFetch("http://parsecs.io/api/");
   const [steps, setSteps] = useState(1);
   const [family, setFamily] = useState([]);
   const [checked, setChecked] = useState(false);
@@ -41,6 +40,12 @@ const JoinClubForm = () => {
     },
     validate,
   });
+
+  useEffect(() => {
+    get("signup-form?populate[0]=signupStep.contentBlock").then((data) =>
+      setContent(data.data.attributes.signupStep)
+    );
+  }, []);
 
   const familyTemp = useFormik({
     initialValues: {
@@ -91,7 +96,10 @@ const JoinClubForm = () => {
       firstName: keys.firstName,
       lastName: keys.lastName,
     }));
-    let combined = { ...primary.values, family: [...purgeKeys] };
+    let combined = {
+      ...primary.values,
+      memberInfo: { family: [...purgeKeys] },
+    };
 
     const submission = {
       data: combined,
@@ -108,7 +116,7 @@ const JoinClubForm = () => {
               },
             ],
             mode: "payment",
-            successUrl: "https://parsecs.io/club-signup/success",
+            successUrl: "http://parsecs.io/club-signup/success",
             cancelUrl: "http://parsecs.io/club-signup/payment-error",
           })
           .then((response) => {
@@ -122,55 +130,62 @@ const JoinClubForm = () => {
   };
 
   return (
-    <Container text textAlign="left">
-      <Segment style={{ backgroundColor: "#F5F5F5" }} raised>
-        <Label color="blue" ribbon="right">
-          Currently: $<RenewalPrice />
-        </Label>
-        <Form
-          style={{
-            marginBottom: "2rem",
-            marginTop: "2rem",
-          }}
-          onSubmit={handleFormSubmit}
-        >
-          {steps === 1 && <ClubBenefits onHandleStepOne={handleStepOne} />}
-          {steps === 2 && (
-            <PrimaryMember
-              primary={primary}
-              onHandleBack={handleBack}
-              onHandleStepTwo={handleStepTwo}
-              modalOpen={modalOpen}
-              setOpen={setModalOpen}
-              setChecked={setChecked}
-              checked={checked}
-              emailData={emailData}
-              loading={loading}
-            />
-          )}
-          {steps === 3 && (
-            <FamilyMembers
-              familyTemp={familyTemp}
-              family={family}
-              setFamily={setFamily}
-              onHandleBack={handleBack}
-              onHandleStepThree={handleStepThree}
-              onTempSubmit={familyTemp.handleSubmit}
-            />
-          )}
-          {steps === 4 && (
-            <Checkout
-              primary={primary}
-              family={family}
-              onHandleBack={handleBack}
-              onHandleSubmit={handleFormSubmit}
-            />
-          )}
-        </Form>
-        <JoinClubSteps steps={steps} />
-      </Segment>
-      {data.length > 0 ? <Success data={data} /> : ""}
-    </Container>
+    <Loader active={loading ? true : false} /> && (
+      <Container text textAlign="left">
+        <Segment style={{ backgroundColor: "#F5F5F5" }} raised>
+          <Label color="blue" ribbon="right">
+            Currently: $<RenewalPrice />
+          </Label>
+          <Form
+            style={{
+              marginBottom: "2rem",
+              marginTop: "2rem",
+            }}
+            onSubmit={handleFormSubmit}
+          >
+            {steps === 1 && (
+              <ClubBenefits onHandleStepOne={handleStepOne} content={content} />
+            )}
+            {steps === 2 && (
+              <PrimaryMember
+                primary={primary}
+                onHandleBack={handleBack}
+                onHandleStepTwo={handleStepTwo}
+                modalOpen={modalOpen}
+                setOpen={setModalOpen}
+                setChecked={setChecked}
+                checked={checked}
+                emailData={emailData}
+                loading={loading}
+                content={content}
+              />
+            )}
+            {steps === 3 && (
+              <FamilyMembers
+                familyTemp={familyTemp}
+                family={family}
+                setFamily={setFamily}
+                onHandleBack={handleBack}
+                onHandleStepThree={handleStepThree}
+                onTempSubmit={familyTemp.handleSubmit}
+                content={content}
+              />
+            )}
+            {steps === 4 && (
+              <Checkout
+                primary={primary}
+                family={family}
+                onHandleBack={handleBack}
+                onHandleSubmit={handleFormSubmit}
+                content={content}
+              />
+            )}
+          </Form>
+          <JoinClubSteps steps={steps} content={content} />
+        </Segment>
+        {data.length > 0 ? <Success data={data} content={content} /> : ""}
+      </Container>
+    )
   );
 };
 

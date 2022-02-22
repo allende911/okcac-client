@@ -1,21 +1,29 @@
 import React from "react";
-import { Step } from "semantic-ui-react";
+import { Loader, Step } from "semantic-ui-react";
 
 const JoinClubSteps = (props) => {
   const steps = props.steps;
+
   return (
     <Step>
       <Step.Group size="tiny" attached="top">
-        <Step active={steps === 1 && true} completed={steps > 1 && true}>
-          Benefits
-        </Step>
-        <Step active={steps === 2 && true} completed={steps > 2 && true}>
-          Primary Member
-        </Step>
-        <Step active={steps === 3 && true} completed={steps > 3 && true}>
-          Add Family
-        </Step>
-        <Step>Review &amp; Pay</Step>
+        {!props.content ? (
+          <Loader />
+        ) : (
+          props.content.map((step) =>
+            step.id <= 4 ? (
+              <Step
+                active={steps === step.id && true}
+                completed={steps > step.id && true}
+                key={step.id}
+              >
+                {step.stepCardDisplay}
+              </Step>
+            ) : (
+              ""
+            )
+          )
+        )}
       </Step.Group>
     </Step>
   );

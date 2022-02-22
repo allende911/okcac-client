@@ -8,12 +8,12 @@ const FamilyMembers = (props) => {
 
   return (
     <>
-      <Header as="h2" icon textAlign="center">
-        <Icon name="users" circular color="blue" />
-        Family Members
+      <Header size="huge" icon textAlign="center">
+        <Icon name={props.content[2].contentBlock.icon} circular color="blue" />
+        {props.content[2].contentBlock.headline}
       </Header>
       <Header sub textAlign="center">
-        Your family joins with you!
+        {props.content[2].contentBlock.subheading || ""}
       </Header>
       <Divider section />
       <Form.Group widths="equal">

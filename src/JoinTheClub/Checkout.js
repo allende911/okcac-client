@@ -16,9 +16,12 @@ const Checkout = (props) => {
 
   return (
     <Segment basic padded>
-      <Header as="h2" icon textAlign="center">
-        <Icon name="dollar sign" color="blue" circular />
-        Review &amp; Pay
+      <Header size="huge" icon textAlign="center">
+        <Icon name={props.content[3].contentBlock.icon} color="blue" circular />
+        {props.content[3].contentBlock.headline}
+      </Header>
+      <Header sub textAlign="center">
+        {props.content[3].contentBlock.subheading || ""}
       </Header>
       <Divider section />
       <Header as="h3">Primary Member:</Header>

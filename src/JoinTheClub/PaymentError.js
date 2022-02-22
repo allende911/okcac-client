@@ -1,26 +1,44 @@
-import React from "react";
-import { Container, Divider, Icon, Header, Segment } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import useFetch from "../utils/useFetch";
+import {
+  Container,
+  Divider,
+  Icon,
+  Header,
+  Segment,
+  Loader,
+} from "semantic-ui-react";
+import ReactMarkdown from "react-markdown";
 
-const PaymentError = (props) => {
-  return (
+const Success = (props) => {
+  const [cancelled, setCancelled] = useState();
+  const { get, loading } = useFetch("http://parsecs.io/api/");
+
+  useEffect(() => {
+    get("signup-form?populate[additionalPage]=*").then((data) =>
+      setCancelled(data.data.attributes.additionalPage)
+    );
+  }, []);
+
+  return !cancelled ? (
+    <Loader />
+  ) : (
     <Container text textAlign="left">
       <Segment style={{ backgroundColor: "#F5F5F5" }} raised>
-        <Header size="huge" icon textAlign="center">
-          <Icon name="rocket" circular color="blue" />
-          Yikes! Something Went Wrong
-        </Header>
-        <Divider />
-        <Header size="large">What happens now?</Header>
-        <p>
-          It is possible your data was still submitted and your payment went
-          through. If you do not hear from us within 48 hours, please send an
-          email to info@okcastroclub.com with your name and time of payment and
-          we will check it out.
-        </p>
-        <p>It is probably our fault. This thing is still in beta!</p>
+        <Segment padded basic>
+          <Header size="huge" icon textAlign="center">
+            <Icon name={cancelled[1].icon} circular color="blue" />
+            {cancelled[1].headline || ""}
+          </Header>
+          <Header sub textAlign="center">
+            {cancelled[1].subheading || ""}
+          </Header>
+          <Divider />
+          <ReactMarkdown>{cancelled[1].content}</ReactMarkdown>
+        </Segment>
       </Segment>
     </Container>
   );
 };
 
-export default PaymentError;
+export default Success;

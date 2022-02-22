@@ -15,9 +15,12 @@ const PrimaryMember = (props) => {
 
   return (
     <>
-      <Header as="h2" icon textAlign="center">
-        <Icon name="user" color="blue" circular />
-        Primary Member
+      <Header size="huge" icon textAlign="center">
+        <Icon name={props.content[1].contentBlock.icon} color="blue" circular />
+        {props.content[1].contentBlock.headline}
+      </Header>
+      <Header sub textAlign="center">
+        {props.content[1].contentBlock.subheading || ""}
       </Header>
       <Divider section />
       <Segment padded basic style={{ width: "100%" }}>
