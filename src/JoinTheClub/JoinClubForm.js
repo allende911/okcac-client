@@ -16,6 +16,12 @@ const stripePromise = loadStripe(
   "pk_test_51KTx32Ff9B6igBMjGFFnQpoISxB0W19RSwvkgPBmJvAUnJYdbuSCOpLNDElE8YBTITTWkUsv3IBNv19xnK5krXoj00xIpghiQV"
 );
 
+const prices = {
+  2: "price_1KVNZIFf9B6igBMjIl6bCRgN",
+  3: "price_1Kj7GtFf9B6igBMjMGiyVrZo",
+  4: "price_1KUZhxFf9B6igBMjp0aqFSpp",
+};
+
 const JoinClubForm = () => {
   const [data, setData] = useState({});
   const [content, setContent] = useState();
@@ -113,7 +119,7 @@ const JoinClubForm = () => {
           .redirectToCheckout({
             lineItems: [
               {
-                price: "price_1KVNZIFf9B6igBMjIl6bCRgN",
+                price: `${prices[current.getMonth() + 1]}`,
                 quantity: 1,
               },
             ],
